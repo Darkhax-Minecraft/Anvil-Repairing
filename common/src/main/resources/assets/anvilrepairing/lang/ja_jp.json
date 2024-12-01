@@ -1,4 +1,5 @@
 {
-    "advancements.anvilrepairing.repair.title": "修理屋の修理屋",
-    "advancements.anvilrepairing.repair.description": "金床を修理する"
+  "advancements.anvilrepairing.repair.title": "修理屋の修理屋",
+  "advancements.anvilrepairing.repair.description": "金床を修理する",
+  "tag.item.anvilrepairing.anvil_repair_items": "アンビルを修理します"
 }
