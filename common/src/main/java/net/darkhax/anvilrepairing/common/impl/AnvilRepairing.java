@@ -7,11 +7,10 @@ import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.animal.Turtle;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -19,7 +18,6 @@ import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LevelEvent;
-import net.minecraft.world.level.block.TurtleEggBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,16 +27,16 @@ public class AnvilRepairing {
     public static final String MOD_ID = "anvilrepairing";
     public static final String MOD_NAME = "AnvilRepairing";
     public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
-    public static final ResourceLocation ADVANCEMENT_ID = id("story/repair");
+    public static final Identifier ADVANCEMENT_ID = id("story/repair");
     public static final TagKey<Item> REPAIR_ITEMS = TagKey.create(Registries.ITEM, id("anvil_repair_items"));
     public static final Config CONFIG = ConfigManager.load(MOD_ID, new Config());
 
-    public static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+    public static Identifier id(String path) {
+        return Identifier.fromNamespaceAndPath(MOD_ID, path);
     }
 
     public static InteractionResult attemptRepair(Player player, Level level, BlockState state, BlockPos pos) {
-        if (!level.isClientSide && player instanceof ServerPlayer serverPlayer && !player.isSpectator() && player.getMainHandItem().is(REPAIR_ITEMS) && (state.is(Blocks.CHIPPED_ANVIL) || state.is(Blocks.DAMAGED_ANVIL))) {
+        if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer && !player.isSpectator() && player.getMainHandItem().is(REPAIR_ITEMS) && (state.is(Blocks.CHIPPED_ANVIL) || state.is(Blocks.DAMAGED_ANVIL))) {
             if (!player.getAbilities().instabuild) {
                 player.getMainHandItem().shrink(1);
             }
@@ -67,9 +65,9 @@ public class AnvilRepairing {
         return false;
     }
 
-    private static boolean awardAdvancement(ServerPlayer player, ResourceLocation advancementId) {
+    private static boolean awardAdvancement(ServerPlayer player, Identifier advancementId) {
         if (CONFIG.grant_advancement) {
-            final AdvancementHolder toGrant = player.server.getAdvancements().get(advancementId);
+            final AdvancementHolder toGrant = player.level().getServer().getAdvancements().get(advancementId);
             if (toGrant != null) {
                 final AdvancementProgress progress = player.getAdvancements().getOrStartProgress(toGrant);
                 if (!progress.isDone()) {

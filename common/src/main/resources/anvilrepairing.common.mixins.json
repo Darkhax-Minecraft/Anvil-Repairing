@@ -1,10 +1,11 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.darkhax.anvilrepairing.forge.mixin",
-  "refmap": "${mod_id}.refmap.json",
+  "package": "net.darkhax.anvilrepairing.common.mixin",
   "compatibilityLevel": "JAVA_18",
-  "mixins": [],
+  "mixins": [
+    "MixinAnvilBlock"
+  ],
   "client": [],
   "server": [],
   "injectors": {

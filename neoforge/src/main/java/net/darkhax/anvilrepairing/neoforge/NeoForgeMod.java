@@ -1,4 +1,4 @@
-package net.darkhax.anvilrepairing.neoforge.impl;
+package net.darkhax.anvilrepairing.neoforge;
 
 import net.darkhax.anvilrepairing.common.impl.AnvilRepairing;
 import net.neoforged.fml.common.Mod;
@@ -7,5 +7,6 @@ import net.neoforged.fml.common.Mod;
 public class NeoForgeMod {
 
     public NeoForgeMod() {
+        AnvilRepairing.LOG.debug("Initializing AnvilRepairing");
     }
 }
